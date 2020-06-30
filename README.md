@@ -1,6 +1,6 @@
 # Curso Gew
 
-Curso de Ionic + Angular + Php
+Curso de Ionic + Angular + Typescript + Php
 
 # Start
 
