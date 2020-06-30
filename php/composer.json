@@ -1,0 +1,17 @@
+{
+  "name": "emalherbi/coletor-estoque",
+  "description": "Coletor de Estoque Mobile",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Eduardo Malherbi",
+      "email": "emalherbi@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "emalherbi/mymysql": "^1.0",
+    "slim/slim": "~2.0",
+    "palanik/corsslim": "^1.1"
+  }
+}
