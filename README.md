@@ -19,11 +19,15 @@ adicionar o .php_cs no projeto.
 Criar uma pasta agora php:
 
 composer init
-composer require emalherbi/mymysql -> MySql
-composer require emalherbi/mymssql -> MsSql
+composer require emalherbi/mymysql 
 composer require slim/slim:~2.0
 composer require palanik/corsslim
 
+
+
+
+-> MySql
+composer require emalherbi/mymssql -> MsSql
 Criar o routes.php
 Criar o index.php e testar
 

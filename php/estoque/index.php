@@ -24,7 +24,7 @@ function all()
 {
     global $mysql;
 
-    $result = $mysql->fetchAll2('SELECT * FROM PRODUTO');
+    $result = $mysql->fetchAll2('SELECT * FROM ESTOQUE');
     echo '{ "result" : '.json_encode($result).'}';
 }
 
@@ -32,7 +32,7 @@ function row($id)
 {
     global $mysql;
 
-    $result = $mysql->fetchRow2("SELECT * FROM PRODUTO WHERE 1 = 1 AND ID_PRODUTO = {$id}");
+    $result = $mysql->fetchRow2("SELECT * FROM ESTOQUE WHERE 1 = 1 AND ID_ESTOQUE = {$id}");
     echo '{ "result" : '.json_encode($result).'}';
 }
 
@@ -40,21 +40,27 @@ function insert()
 {
     global $mysql;
 
+    $result = new stdClass();
+    $result->status = true;
+    $result->msg = '';
+
     $request = \Slim\Slim::getInstance()->request();
     $body = json_decode($request->getBody());
 
     $idProduto = $body->idProduto;
     $qtde = $body->qtde;
-
-    $result = new stdClass();
-    $result->status = true;
-    $result->msg = 'Ops. Ocorreu um erro ao salvar!';
+    $ativo = $body->ativo;
 
     $sql = ' ';
     $sql .= ' INSERT INTO ESTOQUE (ID_PRODUTO, QTDE, ATIVO) ';
-    $sql .= " VALUES ({$idProduto}, {$qtde}, 1) ";
+    $sql .= " VALUES ({$idProduto}, {$qtde}, {$ativo}) ";
 
     $result->status = $mysql->execute($sql);
+
+    if (false === $result->status) {
+        $result->msg = 'Ops. Ocorreu um erro ao salvar!';
+    }
+
     echo '{ "result" : '.json_encode($result).'}';
 }
 
@@ -62,17 +68,27 @@ function update($id)
 {
     global $mysql;
 
+    $result = new stdClass();
+    $result->status = true;
+    $result->msg = '';
+
     $request = \Slim\Slim::getInstance()->request();
     $body = json_decode($request->getBody());
 
-    echo '<pre>';
-    echo print_r($body);
-    echo '<pre>';
-    die();
+    $idProduto = $body->idProduto;
+    $qtde = $body->qtde;
+    $ativo = $body->ativo;
 
-    $result = new stdClass();
-    $result->status = true;
-    $result->msg = 'Ops. Ocorreu um erro ao atualizar!';
+    $sql = ' ';
+    $sql .= ' UPDATE ESTOQUE ';
+    $sql .= " SET ID_PRODUTO = {$idProduto}, QTDE = {$qtde}, ATIVO = {$ativo} ";
+    $sql .= " WHERE ID_ESTOQUE = {$id} ";
+
+    $result->status = $mysql->execute($sql);
+
+    if (false === $result->status) {
+        $result->msg = 'Ops. Ocorreu um erro ao atualizar!';
+    }
 
     echo '{ "result" : '.json_encode($result).'}';
 }
@@ -83,7 +99,17 @@ function delete($id)
 
     $result = new stdClass();
     $result->status = true;
-    $result->msg = 'Ops. Ocorreu um erro ao deletar!';
+    $result->msg = '';
+
+    $sql = ' ';
+    $sql .= ' DELETE FROM ESTOQUE ';
+    $sql .= " WHERE ID_ESTOQUE = {$id} ";
+
+    $result->status = $mysql->execute($sql);
+
+    if (false === $result->status) {
+        $result->msg = 'Ops. Ocorreu um erro ao deletar!';
+    }
 
     echo '{ "result" : '.json_encode($result).'}';
 }
