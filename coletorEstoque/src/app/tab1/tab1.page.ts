@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpService } from '../service/http.service';
+import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
+
 import { FormValidators } from '../enum/form-validators.enum';
+import { HttpService } from '../service/http.service';
 
 @Component({
   selector: 'app-tab1',
@@ -13,7 +15,7 @@ export class Tab1Page {
   public isSubmitted = false;
   public list: Array<any>;
 
-  constructor(private fb: FormBuilder, private http: HttpService) {
+  constructor(private barcodeScanner: BarcodeScanner, private fb: FormBuilder, private http: HttpService) {
     this.ionicForm = this.fb.group({
       idEstoque: [0],
       idProduto: ['', Validators.required],
@@ -21,6 +23,28 @@ export class Tab1Page {
     });
 
     this.all();
+  }
+
+  scanner() {
+    const options: BarcodeScannerOptions = {
+      // preferFrontCamera: false,
+      showFlipCameraButton: true,
+      showTorchButton: true,
+      torchOn: false,
+      prompt: 'Place a barcode inside the scan area',
+      resultDisplayDuration: 500,
+      // formats: 'QR_CODE,PDF_417',
+      // orientation: 'landscape',
+    };
+
+    this.barcodeScanner
+      .scan(options)
+      .then((barcodeData) => {
+        alert('Barcode data' + JSON.stringify(barcodeData));
+      })
+      .catch((err) => {
+        alert('Error' + JSON.stringify(err));
+      });
   }
 
   async all() {
@@ -47,7 +71,8 @@ export class Tab1Page {
     }
 
     const obj: any = this.v;
-    const result: any = await this.http.post('produto/', obj);
+    obj.ativo = 1;
+    const result: any = await this.http.post('estoque/', obj);
 
     if (result.status) {
       alert('OK');

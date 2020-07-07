@@ -1,4 +1,6 @@
 coletorEstoque/node_modules/
 coletorEstoque/platforms/
 coletorEstoque/plugins/
+coletorEstoque/www/
+coletorEstoque/package-lock.json
 php/composer.lock

@@ -7,6 +7,12 @@
 <ion-content>
   <form [formGroup]="ionicForm" (ngSubmit)="onSubmit()" novalidate>
     <ion-card>
+      <div class="ion-padding">
+        <ion-button expand="block" color="primary" type="button" (click)="scanner()">
+          Código de Barras
+        </ion-button>
+      </div>
+
       <ion-item>
         <ion-label position="floating" color="primary">Produtos</ion-label>
         <ion-select formControlName="idProduto" required>

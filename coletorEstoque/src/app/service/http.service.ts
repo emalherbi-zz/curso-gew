@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ export class HttpService {
   public url: string;
 
   constructor(public http: HttpClient) {
-    this.url = 'http://localhost:9086/gew/php/';
+    this.url = 'http://localhost:9086/html/emm/curso-gew/php/';
   }
 
   async get(path: string): Promise<any> {

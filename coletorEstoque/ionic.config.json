@@ -1,5 +1,7 @@
 {
   "name": "coletorEstoque",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
